@@ -47,11 +47,11 @@ test_script:
       if ($env:TOOLCHAIN -eq "msys2")
       {
         $env:MSYSTEM="MINGW64"
-        C:\msys64\usr\bin\bash -l -c "cd /c/projects/readstat && make check"
+        C:\msys64\usr\bin\bash -l -c "cd /c/projects/readstat && make distcheck"
       }
       else
       {
-        C:\cygwin64\bin\sh -lc "cd /cygdrive/c/projects/readstat && make check"
+        C:\cygwin64\bin\sh -lc "cd /cygdrive/c/projects/readstat && make distcheck"
       }
 
 on_finish:
