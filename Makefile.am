@@ -50,6 +50,8 @@ if CODE_COVERAGE_ENABLED
 libreadstat_la_CFLAGS += -O0 -fprofile-arcs -ftest-coverage
 endif
 
+man1_MANS = man/readstat.man
+
 include_HEADERS = src/readstat.h
 
 noinst_HEADERS = \
@@ -141,6 +143,9 @@ readstat_SOURCES = \
 	src/bin/util/readstat_dta_days.c \
 	src/bin/util/readstat_sav_date.c
 
+readstat_LDADD = libreadstat.la
+readstat_CFLAGS = -DREADSTAT_VERSION=\"@READSTAT_VERSION@\" -Wall -Werror -pedantic-errors -std=c99 @SANITIZERS@
+
 extract_metadata_SOURCES = \
 	src/bin/format.c \
 	src/bin/extract_label_set.c \
@@ -149,9 +154,6 @@ extract_metadata_SOURCES = \
 	src/bin/extract_metadata.c \
 	src/bin/util/readstat_dta_days.c \
 	src/bin/util/readstat_sav_date.c
-
-readstat_LDADD = libreadstat.la
-readstat_CFLAGS = -Wall -Werror -pedantic-errors -std=c99 @SANITIZERS@
 
 extract_metadata_LDADD = libreadstat.la
 extract_metadata_CFLAGS = -Wall -Werror -pedantic-errors -std=c99 @SANITIZERS@
@@ -290,6 +292,3 @@ fuzz_compression_sas_rle_SOURCES = \
 fuzz_compression_sas_rle_LDADD = libreadstat.la -lstdc++ -lFuzzer
 fuzz_compression_sas_rle_CFLAGS = -g -Wall @EXTRA_WARNINGS@ -Werror -pedantic-errors -std=c99 @SANITIZERS@
 endif
-
-install-exec-hook:
-	@(cd $(DESTDIR)$(libdir) && $(RM) $(lib_LTLIBRARIES))
