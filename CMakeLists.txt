@@ -82,6 +82,9 @@ set_property(TARGET libreadstat PROPERTY OUTPUT_NAME readstat)
 target_link_libraries(libreadstat PUBLIC m)
 target_compile_options(libreadstat PRIVATE -Werror)
 
+# When using ReadStat as a CMake subproject, find the header files automatically
+target_include_directories(libreadstat PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>")
+
 if(ZLIB_FOUND)
     target_link_libraries(libreadstat PUBLIC z)
     target_compile_definitions(libreadstat PUBLIC HAVE_ZLIB=1)
